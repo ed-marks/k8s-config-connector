@@ -400,6 +400,11 @@ func (in *DNSRecordSetSpec) DeepCopyInto(out *DNSRecordSetSpec) {
 		**out = **in
 	}
 	out.ManagedZoneRef = in.ManagedZoneRef
+	if in.Name != nil {
+		in, out := &in.Name, &out.Name
+		*out = new(string)
+		**out = **in
+	}
 	if in.RoutingPolicy != nil {
 		in, out := &in.RoutingPolicy, &out.RoutingPolicy
 		*out = new(RecordsetRoutingPolicy)

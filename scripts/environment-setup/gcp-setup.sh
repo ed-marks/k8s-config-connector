@@ -35,25 +35,15 @@ gcloud auth configure-docker
 gcloud services enable container.googleapis.com
 # When creating GKE clusters, you must either provide a zone or set the default
 # zone for gcloud. Set the default zone for gcloud to us-west1-a.
-gcloud config set compute/zone us-west1-a
+gcloud config set compute/zone europe-west2-a
 # Define the name of your GKE cluster as cnrm-dev.
-export CLUSTER_NAME="cnrm-dev"
+export CLUSTER_NAME="eds-config-connector-cluster"
 
 if [[ ! $(gcloud beta container clusters list | grep ${CLUSTER_NAME}) ]]; then
     # Create a GKE cluster with Workload Identity enabled.
     gcloud beta container clusters create ${CLUSTER_NAME} \
         --workload-pool=${PROJECT_ID}.svc.id.goog
 fi
-
-echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" \
-    | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key \
-    --keyring /usr/share/keyrings/cloud.google.gpg add -
-
-sudo apt-get update && sudo apt-get install google-cloud-cli
-
-sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
 
 # Configure kubectl to communicate with the cluster.
 gcloud container clusters get-credentials ${CLUSTER_NAME}

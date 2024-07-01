@@ -159,8 +159,9 @@ type DNSRecordSetSpec struct {
 
 	ManagedZoneRef v1alpha1.ResourceRef `json:"managedZoneRef"`
 
-	/* Immutable. The DNS name this record set will apply to. */
-	Name string `json:"name"`
+	/* DEPRECATED. Although this field is still available, there is limited support. We recommend that you use `spec.dnsAuthorizationsRef` instead. */
+	// +optional
+	Name *string `json:"name,omitempty"`
 
 	/* The configuration for steering traffic based on query. You can specify either Weighted Round Robin(WRR) type or Geolocation(GEO) type. */
 	// +optional

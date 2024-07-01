@@ -18,7 +18,7 @@ metadata:
   name: certificatemanagerdnsauthorization-sample
 spec:
   description: sample dns authorization
-  domain: subdomain.hashicorptest.com
+  domain: www.example.zoa.io
   projectRef:
     # Replace ${PROJECT_ID?} with your project ID.
-    external: ${PROJECT_ID?}
+    external: orris-v1-sandbox-dev

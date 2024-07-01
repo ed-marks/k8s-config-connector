@@ -84,7 +84,7 @@ spec:
                   - external
                 properties:
                   external:
-                    description: 'Allowed value: The `dnsResourceRecord.data` field
+                    description: 'Allowed value: The `dnsResourceRecord.name` field
                       of a `CertificateManagerDNSAuthorization` resource.'
                     type: string
                   name:
@@ -122,7 +122,9 @@ spec:
                     type: string
                 type: object
               name:
-                description: Immutable. The DNS name this record set will apply to.
+                description: DEPRECATED. Although this field is still available, there
+                  is limited support. We recommend that you use `spec.dnsAuthorizationsRef`
+                  instead.
                 type: string
               routingPolicy:
                 description: The configuration for steering traffic based on query.
@@ -946,7 +948,6 @@ spec:
                 type: string
             required:
             - managedZoneRef
-            - name
             - type
             type: object
           status:
