@@ -67,33 +67,6 @@ spec:
             - required:
               - dnsAuthorizationsRef
             properties:
-              dnsAuthorizationsRef:
-                oneOf:
-                - not:
-                    required:
-                    - external
-                  required:
-                  - name
-                - not:
-                    anyOf:
-                    - required:
-                      - name
-                    - required:
-                      - namespace
-                  required:
-                  - external
-                properties:
-                  external:
-                    description: 'Allowed value: The `dnsResourceRecord.name` field
-                      of a `CertificateManagerDNSAuthorization` resource.'
-                    type: string
-                  name:
-                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
-                    type: string
-                  namespace:
-                    description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
-                    type: string
-                type: object
               managedZoneRef:
                 oneOf:
                 - not:
@@ -122,10 +95,42 @@ spec:
                     type: string
                 type: object
               name:
-                description: DEPRECATED. Although this field is still available, there
-                  is limited support. We recommend that you use `spec.dnsAuthorizationsRef`
-                  instead.
-                type: string
+                oneOf:
+                - required:
+                  - dnsAuthorizationsRef
+                - required:
+                  - name
+                properties:
+                  dnsAuthorizationsRef:
+                    oneOf:
+                    - not:
+                        required:
+                        - external
+                      required:
+                      - name
+                    - not:
+                        anyOf:
+                        - required:
+                          - name
+                        - required:
+                          - namespace
+                      required:
+                      - external
+                    properties:
+                      external:
+                        description: 'Allowed value: The `dnsResourceRecord.Name`
+                          field of a `CertificateManagerDNSAuthorization` resource.'
+                        type: string
+                      name:
+                        description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                        type: string
+                      namespace:
+                        description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                        type: string
+                    type: object
+                  name:
+                    type: string
+                type: object
               routingPolicy:
                 description: The configuration for steering traffic based on query.
                   You can specify either Weighted Round Robin(WRR) type or Geolocation(GEO)
@@ -899,45 +904,71 @@ spec:
                     type: array
                 type: object
               rrdatas:
-                description: DEPRECATED. Although this field is still available, there
-                  is limited support. We recommend that you use `spec.rrdatasRefs`
-                  instead.
-                items:
-                  type: string
-                type: array
-              rrdatasRefs:
                 items:
                   oneOf:
-                  - not:
-                      required:
-                      - external
-                    required:
-                    - name
-                    - kind
-                  - not:
-                      anyOf:
-                      - required:
-                        - name
-                      - required:
-                        - namespace
-                      - required:
-                        - kind
-                    required:
-                    - external
+                  - required:
+                    - dnsAuthorizationsRef
+                  - required:
+                    - rrdatas
+                  - required:
+                    - rrdatasRefs
                   properties:
-                    external:
-                      description: 'Allowed value: The `address` field of a `ComputeAddress`
-                        resource.'
+                    dnsAuthorizationsRef:
+                      oneOf:
+                      - not:
+                          required:
+                          - external
+                        required:
+                        - name
+                      - not:
+                          anyOf:
+                          - required:
+                            - name
+                          - required:
+                            - namespace
+                        required:
+                        - external
+                      properties:
+                        external:
+                          description: 'Allowed value: The `dnsResourceRecord.Data`
+                            field of a `CertificateManagerDNSAuthorization` resource.'
+                          type: string
+                        name:
+                          description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                          type: string
+                        namespace:
+                          description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                          type: string
+                      type: object
+                    rrdatas:
                       type: string
-                    kind:
-                      description: 'Kind of the referent. Allowed values: ComputeAddress'
-                      type: string
-                    name:
-                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
-                      type: string
-                    namespace:
-                      description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
-                      type: string
+                    rrdatasRefs:
+                      oneOf:
+                      - not:
+                          required:
+                          - external
+                        required:
+                        - name
+                      - not:
+                          anyOf:
+                          - required:
+                            - name
+                          - required:
+                            - namespace
+                        required:
+                        - external
+                      properties:
+                        external:
+                          description: 'Allowed value: The `address` field of a `ComputeAddress`
+                            resource.'
+                          type: string
+                        name:
+                          description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                          type: string
+                        namespace:
+                          description: 'Namespace of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/'
+                          type: string
+                      type: object
                   type: object
                 type: array
               ttl:
@@ -948,6 +979,7 @@ spec:
                 type: string
             required:
             - managedZoneRef
+            - name
             - type
             type: object
           status:

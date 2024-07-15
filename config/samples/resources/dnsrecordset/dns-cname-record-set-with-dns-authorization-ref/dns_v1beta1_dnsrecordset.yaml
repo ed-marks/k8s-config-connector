@@ -18,7 +18,6 @@ metadata:
   name: dnsrecordset-sample-cname
 spec:
   type: "CNAME"
-  name: "_acme-challenge.www.example.com"
   ttl: 300
   managedZoneRef:
     name: dnsrecordset-dep-cname

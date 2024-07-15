@@ -84,6 +84,14 @@ type RecordsetInternalLoadBalancers struct {
 	RegionRef *v1alpha1.ResourceRef `json:"regionRef,omitempty"`
 }
 
+type RecordsetName struct {
+	// +optional
+	DnsAuthorizationsRef *v1alpha1.ResourceRef `json:"dnsAuthorizationsRef,omitempty"`
+
+	// +optional
+	Name *string `json:"name,omitempty"`
+}
+
 type RecordsetPrimary struct {
 	/* The list of internal load balancers to health check. */
 	InternalLoadBalancers []RecordsetInternalLoadBalancers `json:"internalLoadBalancers"`
@@ -123,6 +131,17 @@ type RecordsetRoutingPolicy struct {
 	Wrr []RecordsetWrr `json:"wrr,omitempty"`
 }
 
+type RecordsetRrdatas struct {
+	// +optional
+	DnsAuthorizationsRef *v1alpha1.ResourceRef `json:"dnsAuthorizationsRef,omitempty"`
+
+	// +optional
+	Rrdatas *string `json:"rrdatas,omitempty"`
+
+	// +optional
+	RrdatasRefs *RecordsetRrdatasRefs `json:"rrdatasRefs,omitempty"`
+}
+
 type RecordsetRrdatasRefs struct {
 	/* Allowed value: The `address` field of a `ComputeAddress` resource. */
 	// +optional
@@ -154,25 +173,16 @@ type RecordsetWrr struct {
 }
 
 type DNSRecordSetSpec struct {
-	// +optional
-	DnsAuthorizationsRef *v1alpha1.ResourceRef `json:"dnsAuthorizationsRef,omitempty"`
-
 	ManagedZoneRef v1alpha1.ResourceRef `json:"managedZoneRef"`
 
-	/* DEPRECATED. Although this field is still available, there is limited support. We recommend that you use `spec.dnsAuthorizationsRef` instead. */
-	// +optional
-	Name *string `json:"name,omitempty"`
+	Name RecordsetName `json:"name"`
 
 	/* The configuration for steering traffic based on query. You can specify either Weighted Round Robin(WRR) type or Geolocation(GEO) type. */
 	// +optional
 	RoutingPolicy *RecordsetRoutingPolicy `json:"routingPolicy,omitempty"`
 
-	/* DEPRECATED. Although this field is still available, there is limited support. We recommend that you use `spec.rrdatasRefs` instead. */
 	// +optional
-	Rrdatas []string `json:"rrdatas,omitempty"`
-
-	// +optional
-	RrdatasRefs []RecordsetRrdatasRefs `json:"rrdatasRefs,omitempty"`
+	Rrdatas []RecordsetRrdatas `json:"rrdatas,omitempty"`
 
 	/* The time-to-live of this record set (seconds). */
 	// +optional

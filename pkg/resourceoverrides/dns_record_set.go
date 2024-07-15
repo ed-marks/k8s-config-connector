@@ -39,9 +39,9 @@ func GetDNSRecordSetOverrides() ResourceOverrides {
 	}
 	// Preserve the legacy non-reference field 'rrdatas' after it is changed to
 	// a reference field, 'rrdatasRefs'.
-	ro.Overrides = append(ro.Overrides, preserveRrdatasFieldAndEnsureRrdatasRefsFieldIsMultiKind())
+	//ro.Overrides = append(ro.Overrides, preserveRrdatasFieldAndEnsureRrdatasRefsFieldIsMultiKind())
 	// Preserve the `name` field when `dnsAuthorization` is added
-	ro.Overrides = append(ro.Overrides, preserveNameField())
+	//ro.Overrides = append(ro.Overrides, preserveNameField())
 	// Configure the top-level OneOf to make 'routingPolicy', 'rrdatas', 'rrdatasRef
 	// and 'dnsAuthorizationsRef' mutually exclusive.
 	ro.Overrides = append(ro.Overrides, enforceMutuallyExclusiveRrdatasRoutingPolicyAndDnsAuthorizations())
@@ -63,7 +63,7 @@ func preserveRrdatasFieldAndEnsureRrdatasRefsFieldIsMultiKind() ResourceOverride
 		}
 		// PreserveMutuallyExclusiveNonReferenceField adds a `not` condition to
 		// prevent rrdatas and rrdatasRefs from being set together. This is
-		// redundant due to the enforceMutuallyExclusiveRrdatasAndRoutingPolicy
+		// redundant due to the enforceMutuallyExclusiveRrdatasRoutingPolicyAndDnsAuthorizations
 		// override, so we will manually remove it.
 		schema := k8s.GetOpenAPIV3SchemaFromCRD(crd)
 		spec := schema.Properties["spec"]

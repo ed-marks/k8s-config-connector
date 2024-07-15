@@ -17,4 +17,4 @@ kind: DNSManagedZone
 metadata:
   name: dnsrecordset-dep-cname
 spec:
-  dnsName: "example.com."
+  dnsName: "example.zoa.io."

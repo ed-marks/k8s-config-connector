@@ -106,26 +106,31 @@ spec:
           version: v1beta1
           group: dns.cnrm.cloud.google.com
       - tfField: rrdatas
-        key: rrdatasRefs
-        gvk:
-          kind: ComputeAddress
-          version: v1beta1
-          group: compute.cnrm.cloud.google.com
-        targetField: address
-      - tfField: rrdatas
-        key: dnsAuthorizationsRef
-        gvk:
-          kind: CertificateManagerDNSAuthorization
-          version: v1beta1
-          group: certificatemanager.cnrm.cloud.google.com
-        targetField: dnsResourceRecord.data
+        types:
+          - key: rrdatas
+            jsonSchemaType: string
+          - key: rrdatasRefs
+            gvk:
+              kind: ComputeAddress
+              version: v1beta1
+              group: compute.cnrm.cloud.google.com
+            targetField: address
+          - key: dnsAuthorizationsRef
+            gvk:
+              kind: CertificateManagerDNSAuthorization
+              version: v1beta1
+              group: certificatemanager.cnrm.cloud.google.com
+            targetField: dns_resource_record.data
       - tfField: name
-        key: dnsAuthorizationsRef
-        gvk:
-          kind: CertificateManagerDNSAuthorization
-          version: v1beta1
-          group: certificatemanager.cnrm.cloud.google.com
-        targetField: dnsResourceRecord.name
+        types:
+          - key: dnsAuthorizationsRef
+            gvk:
+              kind: CertificateManagerDNSAuthorization
+              version: v1beta1
+              group: certificatemanager.cnrm.cloud.google.com
+            targetField: dns_resource_record.name
+          - key: name
+            jsonSchemaType: string
       - tfField: routing_policy.geo.rrdatas
         key: rrdatasRefs
         gvk:

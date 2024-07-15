@@ -1,4 +1,4 @@
-# Copyright 2023 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,15 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: certificatemanager.cnrm.cloud.google.com/v1beta1
-kind: CertificateManagerDNSAuthorization
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
-  name: certificatemanagerdnsauthorization-sample
+  name: unmanaged-detector
 spec:
-  description: sample dns authorization
-  domain: www.example.zoa.io
-  location: global
-  type: PER_PROJECT_RECORD
-  projectRef:
-    # Replace ${PROJECT_ID?} with your project ID.
-    external: orris-v1-sandbox-dev
+  template:
+    spec:
+      containers:
+      - image: IMAGE_URL
+        name: unmanageddetector
